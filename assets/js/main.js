@@ -651,7 +651,7 @@ class Stock {
       class: 'mobile-nav d-lg-none'
     });
     $('body').append($mobile_nav);
-    $('body').prepend('<div class="mobile-nav-toggle"><a href="./checkout.html#checkout" class="mobile-nav-toggle cart d-lg-none mr-5"><i class="ri-shopping-cart-line"></i></a><small class="cart_count mobile-nav-toggle"></small></div>');
+    $('body').prepend('<div class="mobile-nav-toggle d-lg-none"><a href="./checkout.html#checkout" class="mobile-nav-toggle cart d-lg-none mr-5"><i class="ri-shopping-cart-line"></i></a><small class="cart_count mobile-nav-toggle"></small></div>');
     $('body').prepend('<button type="button" class="mobile-nav-toggle mnt d-lg-none"><i class="icofont-navigation-menu"></i></button>');
     $('body').append('<div class="mobile-nav-overly"></div>');
 
