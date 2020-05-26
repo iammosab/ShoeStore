@@ -595,6 +595,7 @@ class Stock {
         _sizes.sort().forEach(function(v,i){
           $('#select-size').append(`<option value="${v}">${v}</option>`);
         });
+        $('.cart_count').removeClass('hide');
         $('.alert-holder').html(alert('success','Added to bag successfully. <a href="checkout.html#checkout">view bag</a>'));
       }else
         $('.alert-holder').html(alert('danger','This product is out of stock.'));
