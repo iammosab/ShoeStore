@@ -551,10 +551,10 @@ class Stock {
 
     $('#select-color').text('');
     Stock.getColorsByShoe(SHOE_ID).forEach(function(v,i){
-      $('#select-color').append(`<option value="${v}">${capitalize_Words(v)}</option>`);
+      $('#select-color').append(`<option value="${v.toLocaleLowerCase()}">${capitalize_Words(v)}</option>`);
     })
 
-    imgholder.attr('src',`assets/img/shoes/${brand_name}/`+Shoe.findImagesByColor(shoe,$('#select-color').val())[0]);
+    imgholder.attr('src',`assets/img/shoes/${brand_name}/`+Shoe.findImagesByColor(shoe,$('#select-color').val().toLocaleLowerCase())[0]);
 
 
     $('#select-size').text('');
@@ -564,7 +564,7 @@ class Stock {
     });
 
     $('#select-color').change(function(){
-      var imgs = Shoe.findImagesByColor(shoe,$(this).val())
+      var imgs = Shoe.findImagesByColor(shoe,$(this).val().toLocaleLowerCase())
       imgholder.attr('src',`assets/img/shoes/${brand_name}/`+imgs[0]);
       $('#select-size').text('');
       var _sizes = Stock.getSizesByShoe(SHOE_ID,$('#select-color option:selected').val());
@@ -588,7 +588,7 @@ class Stock {
   $('#addToCartBtn').click(function(){
     if($('#select-color').val() != "" && $('#select-size').val() != "" && $('#select-color').val() != null  && $('#select-size').val() != null)
     {
-      if(Stock.addToCart(Stock.findShoeByColorSize(SHOE_ID,$('#select-color').val(),parseInt($('#select-size').val())))){
+      if(Stock.addToCart(Stock.findShoeByColorSize(SHOE_ID,$('#select-color').val().toLocaleLowerCase(),parseInt($('#select-size').val())))){
         localStorage.setItem('stock',JSON.stringify(Stock.list));
         $('#select-size').text('');
         var _sizes = Stock.getSizesByShoe(SHOE_ID,$('#select-color option:selected').val());
