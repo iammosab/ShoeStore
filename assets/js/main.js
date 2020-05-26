@@ -1,9 +1,3 @@
-/**
-* Template Name: OnePage - v2.0.0
-* Template URL: https://bootstrapmade.com/onepage-multipurpose-bootstrap-template/
-* Author: BootstrapMade.com
-* License: https://bootstrapmade.com/license/
-*/
 
 var SHOE_ID=null;
 
@@ -205,7 +199,6 @@ class Cart {
     this.getFilteredShoes().forEach(function(v,i){
       var vv = v;
       v = v[0];
-      console.log(v);
       var item = '<div class="card shoe-item mb-2" data-id="'+v.id+'"data-shoe="'+v.shoe+'"><div class="card-body row p-0">';
           item += '<div class="col-sm-4">';
           item += '    <img class="img-fluid" style="object-fit: cover;max-height: 160px;width: 100%;" src="assets/img/shoes/'+Brand.findById(Shoe.findById(v.shoe).brand).name.toLocaleLowerCase()+'/'+Shoe.findImagesByColor(Shoe.findById(v.shoe),v.color)[0]+'" alt="" srcset="">';
@@ -250,7 +243,6 @@ class Cart {
           paymentMode: 'cards',
           cardFormMode: 'cardTokenisation',
           cardTokenised: function (event) {
-            console.log(event.data.cardToken);
             Cart.removeAll();
           }
         });
@@ -390,7 +382,6 @@ class Stock {
   }
 
   static addToCart(shoe){ 
-    console.log(shoe);
     if(shoe.quantity>0)
     {
       shoe.quantity-=1;
@@ -519,19 +510,11 @@ class Stock {
 
   $('#shoesCount').text(Stock.getTotalQuantite())
   
-  console.log(Stock.findByShoe(Shoe.list[0].id));
-
-  console.log('Total Of 1:' + Stock.getTotalQuantiteOfShoe(Shoe.list[0]) + ' /// Total : ' + Stock.getTotalQuantite());
-
-
   shuffle(Shoe.list).forEach(function(v,i){
     $('.shoes').append(new shoeComponent(v.id,v.name,v.price,Brand.findById(v.brand).name,v.categorie,v.colors.length,v.images).get());
   })
   
-  console.log(Shoe.list)
-  
-  // Preloader
-  $(window).on('load', function() {
+    $(window).on('load', function() {
     if ($('#preloader').length) {
       $('#preloader').delay(100).fadeOut('slow', function() {
         $(this).remove();
@@ -583,7 +566,6 @@ class Stock {
     $('#select-color').change(function(){
       var imgs = Shoe.findImagesByColor(shoe,$(this).val())
       imgholder.attr('src',`assets/img/shoes/${brand_name}/`+imgs[0]);
-      //console.log({shoe : shoe,color:$('#select-color').val(),size : $('#select-size').val(),totalQuantite : Stock.getQuantiteOfShoeByColorSize(shoe.id,$('#select-color').val(),$('#select-size').val())});
       $('#select-size').text('');
       var _sizes = Stock.getSizesByShoe(SHOE_ID,$('#select-color option:selected').val());
       _sizes.sort().forEach(function(v,i){
@@ -630,8 +612,6 @@ class Stock {
         Cart.showItems($('.shoe-items'));
 
       }
-
-  // Smooth scroll for the navigation menu and links with .scrollto classes
   $(document).on('click', '.nav-menu a, .mobile-nav a, .scrollto', function(e) {
     if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') && location.hostname == this.hostname) {
       e.preventDefault();
@@ -666,19 +646,18 @@ class Stock {
       }
     }
   });
-
-  // Mobile Navigation
   if ($('.nav-menu').length) {
     var $mobile_nav = $('.nav-menu').clone().prop({
       class: 'mobile-nav d-lg-none'
     });
     $('body').append($mobile_nav);
-    $('body').prepend('<button type="button" class="mobile-nav-toggle d-lg-none"><i class="icofont-navigation-menu"></i></button>');
+    $('body').prepend('<div class="mobile-nav-toggle"><a href="./checkout.html#checkout" class="mobile-nav-toggle cart d-lg-none mr-5"><i class="ri-shopping-cart-line"></i></a><small class="cart_count mobile-nav-toggle"></small></div>');
+    $('body').prepend('<button type="button" class="mobile-nav-toggle mnt d-lg-none"><i class="icofont-navigation-menu"></i></button>');
     $('body').append('<div class="mobile-nav-overly"></div>');
 
-    $(document).on('click', '.mobile-nav-toggle', function(e) {
+    $(document).on('click', '.mobile-nav-toggle.mnt', function(e) {
       $('body').toggleClass('mobile-nav-active');
-      $('.mobile-nav-toggle i').toggleClass('icofont-navigation-menu icofont-close');
+      $('.mobile-nav-toggle.mnt i').toggleClass('icofont-navigation-menu icofont-close');
       $('.mobile-nav-overly').toggle();
     });
 
@@ -689,20 +668,18 @@ class Stock {
     });
 
     $(document).click(function(e) {
-      var container = $(".mobile-nav, .mobile-nav-toggle");
+      var container = $(".mobile-nav, .mobile-nav-toggle.mnt");
       if (!container.is(e.target) && container.has(e.target).length === 0) {
         if ($('body').hasClass('mobile-nav-active')) {
           $('body').removeClass('mobile-nav-active');
-          $('.mobile-nav-toggle i').toggleClass('icofont-navigation-menu icofont-close');
+          $('.mobile-nav-toggle.mnt i').toggleClass('icofont-navigation-menu icofont-close');
           $('.mobile-nav-overly').fadeOut();
         }
       }
     });
-  } else if ($(".mobile-nav, .mobile-nav-toggle").length) {
-    $(".mobile-nav, .mobile-nav-toggle").hide();
+  } else if ($(".mobile-nav, .mobile-nav-toggle.mnt").length) {
+    $(".mobile-nav, .mobile-nav-toggle.mnt").hide();
   }
-
-  // Navigation active state on scroll
   var nav_sections = $('section');
   var main_nav = $('.nav-menu, #mobile-nav');
 
@@ -724,8 +701,6 @@ class Stock {
       }
     });
   });
-
-  // Toggle .header-scrolled class to #header when page is scrolled
   $(window).scroll(function() {
     if ($(this).scrollTop() > 100) {
       $('#header').addClass('header-scrolled');
@@ -737,8 +712,6 @@ class Stock {
   if ($(window).scrollTop() > 100) {
     $('#header').addClass('header-scrolled');
   }
-
-  // Back to top button
   $(window).scroll(function() {
     if ($(this).scrollTop() > 100) {
       $('.back-to-top').fadeIn('slow');
@@ -753,14 +726,11 @@ class Stock {
     }, 1500, 'easeInOutExpo');
     return false;
   });
-
-  // jQuery counterUp
   $('[data-toggle="counter-up"]').counterUp({
     delay: 10,
     time: 1000
   });
 
-  // Testimonials carousel (uses the Owl Carousel library)
   $(".testimonials-carousel").owlCarousel({
     autoplay: true,
     dots: true,
@@ -777,40 +747,6 @@ class Stock {
       }
     }
   });
-
-  // Porfolio isotope and filter
-  $(window).on('load', function() {
-    var portfolioIsotope = $('.portfolio-container').isotope({
-      itemSelector: '.portfolio-item'
-    });
-
-    $('#portfolio-flters li').on('click', function() {
-      $("#portfolio-flters li").removeClass('filter-active');
-      $(this).addClass('filter-active');
-
-      portfolioIsotope.isotope({
-        filter: $(this).data('filter')
-      });
-      aos_init();
-    });
-
-    // Initiate venobox (lightbox feature used in portofilo)
-    $(document).ready(function() {
-      $('.venobox').venobox({
-        'share': false
-      });
-    });
-  });
-
-  // Portfolio details carousel
-  $(".portfolio-details-carousel").owlCarousel({
-    autoplay: true,
-    dots: true,
-    loop: true,
-    items: 1
-  });
-
-  // Initi AOS
   function aos_init() {
     AOS.init({
       duration: 1000,
