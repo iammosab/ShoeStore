@@ -203,7 +203,7 @@ class Cart {
           item += '<div class="col-sm-4">';
           item += '    <img class="img-fluid" style="object-fit: cover;max-height: 160px;width: 100%;" src="assets/img/shoes/'+Brand.findById(Shoe.findById(v.shoe).brand).name.toLocaleLowerCase()+'/'+Shoe.findImagesByColor(Shoe.findById(v.shoe),v.color)[0]+'" alt="" srcset="">';
           item += ' </div>';
-          item += '<div class="col-sm-8 p-3">';
+          item += '<div class="col-sm-8 p-4">';
           item += '  <button type="button" class="close delete-shoe-item" style="position: absolute;right: 30px;top: 12px;" aria-label="Delete">';
           item += '      <span aria-hidden="true">&times;</span>';
           item += '    </button>';
@@ -475,7 +475,7 @@ class Stock {
       "slip-on/pink-1.png",
       "slip-on/grey-1.png",
     ]),
-    new Shoe("Yakht Club",Brand.findByName("Vans").id,"Men's shoe",500,["Colorful"],
+    new Shoe("Yakht Club",Brand.findByName("Vans").id,"Men's shoe",500,["colorful"],
     [
       "yakht-club/colorful-1.png",
       "yakht-club/colorful-2.png",
@@ -484,7 +484,7 @@ class Stock {
 
   Stock.list = [];
   Cart.list = [];
-
+  
   if(localStorage.getItem('stock') == null) {
     Shoe.list.forEach(function(v,i){
       v.colors.forEach(function(color,j){
@@ -606,7 +606,7 @@ class Stock {
 
     if(Cart.list == null || Cart.list.length == 0)
     {
-      $('#checkout .row:eq(0)').html('<div class="col-12"><h1>Your bag is empty</h1><a href="index.html#shop" class="btn  btn-primary mt-4">Shop now</a></div>').addClass('empty text-center img-fluid');
+      $('#checkout .row:eq(0)').html('<div class="col-xl-8 col-lg-10 text-center"><h1>Your bag is empty</h1><a href="index.html#shop" class="btn  btn-primary mt-4">Shop now</a></div>').addClass('empty');
     }else
       {
         Cart.showItems($('.shoe-items'));
@@ -651,7 +651,7 @@ class Stock {
       class: 'mobile-nav d-lg-none'
     });
     $('body').append($mobile_nav);
-    $('body').prepend('<div class="mobile-nav-toggle d-lg-none"><a href="./checkout.html#checkout" class="mobile-nav-toggle cart d-lg-none mr-5"><i class="ri-shopping-cart-line"></i></a><small class="cart_count mobile-nav-toggle"></small></div>');
+    $('body').prepend('<div class="mobile-nav-toggle'+(Cart.list.length<=0 ? 'hide':'')+' d-lg-none"><a href="./checkout.html#checkout" class="mobile-nav-toggle cart d-lg-none mr-5"><i class="ri-shopping-cart-line"></i></a><small class="cart_count mobile-nav-toggle"></small></div>');
     $('body').prepend('<button type="button" class="mobile-nav-toggle mnt d-lg-none"><i class="icofont-navigation-menu"></i></button>');
     $('body').append('<div class="mobile-nav-overly"></div>');
 
